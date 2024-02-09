@@ -14,7 +14,7 @@
  public class Main {
      /**
       * Print out the message "Hello World!" to the console.
-      * @param args
+      * @param args The parameters to the executable, separated by spaces.
       */
      public static void main(String[] args) {
          System.out.println("Hello World!");
