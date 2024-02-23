@@ -1,6 +1,7 @@
 package com.velotronix;
 
 import java.util.*;
+import com.velotronix.*;
 
 
 /**
@@ -35,10 +36,10 @@ public class Calculator {
     public void run(Scanner scanner) {
         while(command != 'q') {
             printMenu();
-            System.out.println("Enter a command: ");
+            System.out.print("Enter a command: ");
             command = getMenuCommand(scanner);
             executeCommand(scanner, command);
-
+        }
     }
 
     /**
@@ -64,6 +65,8 @@ public class Calculator {
     private void printMenu() {
         printMenuLine();
         System.out.println("ChavviCalc");
+        printMenuLine();
+        System.out.printf("A = %.3f\t\tB = %.3f%n", firstNumber, secondNumber);
         printMenuLine();
 
         printMenuItem('a', "Enter a value for A");
@@ -100,13 +103,10 @@ public class Calculator {
 
         System.out.print(prompt);
         try {
-            value = scanner.nextFloat();
-            if(value % 1 == 0) {
-                throw new InputMismatchException("Wrong type. Expecting a float.");
-            }
-        } catch(InputMismatchException exception) {
-            System.out.println(exception.toString());
-            scanner.next();
+            value = scanner.nextFloat();           
+        } catch(InputMismatchException e) {
+            System.out.println("ERROR: Expecting a float.");
+            scanner.reset();
         }
         return value;
     }
@@ -116,34 +116,37 @@ public class Calculator {
         
         switch(command) {
             case 'a':
-                firstNumber = getInputValue(scanner, "Enter value for A");               
+                firstNumber = getInputValue(scanner, "Enter value for A: ");               
                 break;
             case 'b':
-                firstNumber = getInputValue(scanner, "Enter value for B");
+                secondNumber = getInputValue(scanner, "Enter value for B: ");
                 break;
             case '+':
-                System.out.printf("%f + %f = %.3f%n ", firstNumber, secondNumber, firstNumber + secondNumber);
+                firstNumber += secondNumber;
                 break;
             case '-':
-                System.out.printf("%f - %f = %.3f%n ", firstNumber, secondNumber, firstNumber - secondNumber);
+                firstNumber -= secondNumber;
                 break;
             case '*':
-                System.out.printf("%f * %f = %.3f%n ", firstNumber, secondNumber, firstNumber * secondNumber);
+                firstNumber *= secondNumber;
                 break;
             case '/':
-                System.out.printf("%f / %f = %.3f%n ", firstNumber, secondNumber, firstNumber / secondNumber);
+                if(secondNumber == 0) {
+                    System.out.println("ERROR: Divide by zero.");
+                }
+                else {
+                    firstNumber /= secondNumber;
+                }
                 break;
             case 'c':
                 firstNumber = 0;
                 secondNumber = 0;
-
-                System.out.println("A and B values are cleared.");
                 break;
             case 'q':
-                System.out.println("Quitting...Thank you for using ChavviCalc.");
+                System.out.println("Thank you for using ChavviCalc.\n");
                 break;
             default:
-                System.out.println("ERROR: Unknown command. Please retry.")
+                System.out.println("ERROR: Unknown command.");
                 isSuccessful = false;
         }
 
