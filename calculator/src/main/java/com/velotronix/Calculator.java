@@ -32,6 +32,11 @@ public class Calculator {
     }
 
 
+    /**
+     * Run the calculator. Display the menu, take the user's command inputs, and
+     * performs the operations.
+     * @param scanner Where to read the user's input.
+     */
     public void run(Scanner scanner) {
         while(command != 'q') {
             printMenu();
@@ -97,30 +102,47 @@ public class Calculator {
         return command;
     }
 
+    /**
+     * Obtain a numeric value from the user input. Expecting a float.
+     * @param scanner Where to read the user's input.
+     * @param prompt Instruction to the user -- the target of the input.
+     * @return The numeric value, parsed from the user's input.
+     */
     private float getInputValue(Scanner scanner, String prompt) {
-        System.out.print(prompt);
+        float value = 0;
 
-        float value = 0;      
-        String rawInput = scanner.nextLine();
+        System.out.print(prompt);        
+        String rawInput = scanner.nextLine();        
         if(rawInput.length() > 0) {
-            try {
-                value = Float.parseFloat(rawInput);
-            } catch(NullPointerException | NumberFormatException e) {
-                System.out.println("ERROR: Expected a float.");
-            }
+            value = Float.parseFloat(rawInput);            
         }
+
         return value;
     }
 
-    private Boolean executeCommand(Scanner scanner, Character command) {
-        Boolean isSuccessful = true;
+    /**
+     * Perform the calculator's operations.
+     * @param scanner Where to obtain the user's numeric inputs when needed.
+     * @param command The user's command, which is the calculator's prompt.
+     * @return True if the operation is successful; False otherwise.
+     */
+    private boolean executeCommand(Scanner scanner, Character command) {
+        boolean isSuccessful = true;
         
-        switch(command) {
+        switch(command) {            
             case 'a':
-                firstNumber = getInputValue(scanner, "Enter value for A: ");               
-                break;
-            case 'b':
-                secondNumber = getInputValue(scanner, "Enter value for B: ");
+                try {
+                    firstNumber = getInputValue(scanner, "Enter value for A: ");        
+                } catch(NullPointerException | NumberFormatException e) {
+                    System.out.println("ERROR: Expected a float.");
+                }
+                break;            
+            case 'b':                
+                try {
+                    secondNumber = getInputValue(scanner, "Enter value for B: ");        
+                } catch(NullPointerException | NumberFormatException e) {
+                    System.out.println("ERROR: Expected a float.");
+                }
                 break;
             case '+':
                 firstNumber += secondNumber;
