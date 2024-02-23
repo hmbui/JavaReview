@@ -1,7 +1,6 @@
 package com.velotronix;
 
 import java.util.*;
-import com.velotronix.*;
 
 
 /**
@@ -99,14 +98,16 @@ public class Calculator {
     }
 
     private float getInputValue(Scanner scanner, String prompt) {
-        float value = 0;
-
         System.out.print(prompt);
-        try {
-            value = scanner.nextFloat();           
-        } catch(InputMismatchException e) {
-            System.out.println("ERROR: Expecting a float.");
-            scanner.reset();
+
+        float value = 0;      
+        String rawInput = scanner.nextLine();
+        if(rawInput.length() > 0) {
+            try {
+                value = Float.parseFloat(rawInput);
+            } catch(NullPointerException | NumberFormatException e) {
+                System.out.println("ERROR: Expected a float.");
+            }
         }
         return value;
     }
