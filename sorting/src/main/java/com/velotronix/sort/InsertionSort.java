@@ -1,3 +1,12 @@
+/**
+ * Implementing and testing the Insertion Sort algorithm.
+ * Author: Hai Bui
+ * Created: March 14, 2024.
+ * Credits:
+ * - Gabriel Solomon <Gabriel.Solomon@sjcc.edu>: Test data and test code.
+ */
+
+
 package com.velotronix.sort;
 
 import org.json.simple.*;
@@ -8,22 +17,24 @@ public class InsertionSort {
 
     public static void main(String[] args) {
         String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_3906.json";
-        //String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_10.json";
-        //String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_5.json";
+        // String fileName =
+        // "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_10.json";
+        // String fileName =
+        // "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_5.json";
 
         // Read cupcake names
         JSONArray cupcakeArray = JSONFile.readArray(fileName);
         String[] cupcakeNameArray = nameArray(cupcakeArray);
         System.out.println(cupcakeNameArray);
 
-        // Print unsorted list
+        // Print the unsorted list
         System.out.println("----- Unsorted array -----");
         print(cupcakeNameArray);
 
         // Sort
         insertionSort(cupcakeNameArray);
 
-        // Print sorted list
+        // Print the sorted list
         System.out.println("----- Sorted array----- ");
         print(cupcakeNameArray);
 
@@ -63,24 +74,26 @@ public class InsertionSort {
         return arr;
     }
 
-    // Insertion Sort an array, O(n^2)
+    /**
+     * Sort an array of strings using Insertion Sort, O(n^2)
+     * @param arr The string array to be sorted.
+    */    
     public static void insertionSort(String[] arr) {
         int length = arr.length;
         for (int i = 1; i < length; i++) {
             String currentElement = arr[i];
-            int j = i - 1;
 
             // For all array elements preceding the current element, if one of
             // such elements is greater than the current element, swap the
-            // greater element with the element right behind it
+            // greater element with the element right behind it.
+            int j = i - 1;
             for (; j >= 0 && arr[j].compareToIgnoreCase(currentElement) > 0; j--) {
                 arr[j + 1] = arr[j];
-                
+
                 // Increase the count for profiling
                 count++;
             }
             arr[j + 1] = currentElement;
-            count++;
         }
     }
 }
