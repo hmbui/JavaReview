@@ -1,0 +1,19 @@
+----- Unsorted array -----
+Number  Name
+------  ---------------
+0000    B
+0001    G
+0002    C
+0003    A
+0004    Z
+----- Sorted array----- 
+Number  Name
+------  ---------------
+0000    A
+0001    B
+0002    C
+0003    G
+0004    Z
+----- Statistics -----
+Size of array = 5
+Count = 8

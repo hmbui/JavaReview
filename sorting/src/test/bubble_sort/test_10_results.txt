@@ -1,0 +1,29 @@
+----- Unsorted array -----
+Number	Name
+------	---------------
+0000	Tiramisu Bonbon
+0001	Tiramisu Gummies
+0002	Tiramisu Chups
+0003	Tiramisu Bar
+0004	Tiramisu Claw
+0005	Tiramisu Pastry
+0006	Tiramisu Biscuit
+0007	Tiramisu Lollipop
+0008	Tiramisu Fruitcake
+0009	Tiramisu Donut
+----- Sorted array----- 
+Number	Name
+------	---------------
+0000	Tiramisu Bar
+0001	Tiramisu Biscuit
+0002	Tiramisu Bonbon
+0003	Tiramisu Chups
+0004	Tiramisu Claw
+0005	Tiramisu Donut
+0006	Tiramisu Fruitcake
+0007	Tiramisu Gummies
+0008	Tiramisu Lollipop
+0009	Tiramisu Pastry
+----- Statistics -----
+Size of array = 10
+Count = 100

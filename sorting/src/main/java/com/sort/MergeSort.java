@@ -7,11 +7,9 @@ public class MergeSort {
   private static int count = 0;
 
   public static void main(String[] args) {
-    // String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_3906.json";
-    // String fileName =
-    //   "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_10.json";
-    String fileName =
-      "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_5.json";
+    String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_3906.json";
+    // String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_10.json";
+    // String fileName = "/Users/haib/code/JavaReview/sorting/src/main/java/com/sort/cupcake_test_5.json";
 
     // read cupcake names
     JSONArray cupcakeArray = JSONFile.readArray(fileName);
