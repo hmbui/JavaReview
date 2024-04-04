@@ -16,9 +16,42 @@ import org.json.simple.*;
 
 public class Commander {
   private Character command;
+  private String[] commands;
 
-  public Commander() {
+  public Commander(String commandFilePath) {
     command = ' ';
+    commands = readCommands(commandFilePath);
+  }
+
+  /**
+   * Parse the JSON array to the String array.
+   * 
+   * @param commandArray
+   * @return
+   */
+  private String[] readCommands(String commandFilePath) {
+    JSONArray commandJSONArray = JSONFile.readArray(commandFilePath);
+    String[] arr = new String[commandJSONArray.size()];
+
+    // Get the names from JSON object
+    for (int i = 0; i < commandJSONArray.size(); i++) {
+      String command = commandJSONArray.get(i).toString();
+      arr[i] = command;
+    }
+    return arr;
+  }
+
+  /**
+   * Print the command array.
+   * 
+   * @param commandArray
+   */
+  private void printCommands() {
+    System.out.printf("\nNumber\tCommand\n");
+    System.out.printf("------\t---------------\n");
+    for (int i = 0; i < commands.length; i++) {
+      System.out.printf("%04d\t%s\n", i, commands[i]);
+    }
   }
 
   /**
@@ -30,6 +63,7 @@ public class Commander {
   public void run(Scanner scanner) {
     while (command != 'q') {
       printMenu();
+
       System.out.print("Enter a command: ");
       command = getMenuCommand(scanner);
       executeCommand(scanner, command);
@@ -68,6 +102,18 @@ public class Commander {
   }
 
   /**
+   * Issue a random command
+   * 
+   * @param commandArray
+   * @param numCommand
+   */
+  private void randomCommand() {
+    Random rand = new Random();
+    int randIndex = rand.nextInt(commands.length);
+    System.out.printf("[COMMAND ISSUED]: %s\n", commands[randIndex]);
+  }
+
+  /**
    * Read the first character of the user's console input as the menu command.
    * 
    * @param scanner The input reader object.
@@ -94,6 +140,25 @@ public class Commander {
    */
   private boolean executeCommand(Scanner scanner, Character command) {
     boolean isSuccessful = true;
+
+    switch (command) {
+      case 'i':
+        randomCommand();
+        break;
+      case 'l':
+        printCommands();
+        break;
+      case 'u':
+        break;
+      case 'r':
+        break;
+      case 'q':
+        System.out.println("Thank you, General.\n");
+        break;
+      default:
+        System.out.println("ERROR: Unknown command.");
+        isSuccessful = false;
+    }
 
     return isSuccessful;
   }

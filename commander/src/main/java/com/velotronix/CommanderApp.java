@@ -1,16 +1,12 @@
 package com.velotronix;
 
-import java.util.Random;
 import java.util.Scanner;
 
-import org.json.simple.*;
-
-import com.velotronix.JSONFile;
-import com.velotronix.Commander;
 
 public class CommanderApp {
   public static void main(String[] args) {
-    Commander commander = new Commander();
+    Commander commander = new Commander(
+        "/Users/haib/code/JavaReview/commander/src/main/java/com/velotronix/commands.json");
 
     Scanner scanner = new Scanner(System.in);
     commander.run(scanner);
