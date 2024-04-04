@@ -19,3 +19,4 @@ public class ChavviCalc {
         scanner.close();
     }
 }
+
