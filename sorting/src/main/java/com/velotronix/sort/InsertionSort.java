@@ -6,7 +6,6 @@
  * - Gabriel Solomon <Gabriel.Solomon@sjcc.edu>: Test data and test code.
  */
 
-
 package com.velotronix.sort;
 
 import org.json.simple.*;
@@ -76,8 +75,9 @@ public class InsertionSort {
 
     /**
      * Sort an array of strings using Insertion Sort, O(n^2)
+     * 
      * @param arr The string array to be sorted.
-    */    
+     */
     public static void insertionSort(String[] arr) {
         int length = arr.length;
         for (int i = 1; i < length; i++) {
