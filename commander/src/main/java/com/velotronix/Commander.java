@@ -1,5 +1,5 @@
 /**
- * Implementing of the Commander class.
+ * Implementation of the Commander class.
  * Author: Hai Bui
  * Created: April 3, 2024.
  * 
@@ -20,9 +20,9 @@ import org.json.simple.*;
  * - Can read a list of commands it can issue from a JSON file.
  * - Can issue a random command from the command list.
  * - Can undo the last command that was issued, down to the entire
- *    command history as a stack until it's empty.
+ * command history as a stack until it's empty.
  * - Can redo the last command that was issued, down to the entire
- *    command history as a stack until it's empty.
+ * command history as a stack until it's empty.
  */
 public class Commander {
   private Character command;
@@ -43,7 +43,7 @@ public class Commander {
    * Parse the JSON array to the String array.
    * 
    * @param commandFilePath The complete file path to the JSON file that stores
-   *  a complete list of available commands.
+   *                        a complete list of available commands.
    */
   private void readCommands(String commandFilePath) {
     JSONArray commandJSONArray = JSONFile.readArray(commandFilePath);
@@ -96,7 +96,7 @@ public class Commander {
   /**
    * Print a menu command item.
    * 
-   * @param command A one-character command.
+   * @param command     A one-character command.
    * @param description The description of the command.
    */
   private void printMenuItem(Character command, String description) {
@@ -107,23 +107,23 @@ public class Commander {
    * Pop a command from the source stack and push that to the destination stack
    * as part of the undo/redo mechanism. Also print out the command popped
    * from the source stack.
-   * @param source The source stack to pop the command from.
-   * @param destination The destination stack to push the command to.
-   * @param messageHeader The header of the message that prints out the command.
+   * 
+   * @param source         The source stack to pop the command from.
+   * @param destination    The destination stack to push the command to.
+   * @param messageHeader  The header of the message that prints out the command.
    * @param emptySourceMsg The message to print out if the source stack is empty.
    */
   private void shuffleCommand(
-    Stack<String> source, Stack<String> destination, String messageHeader,
-    String emptySourceMsg) {
-      if(source.size() > 0) {
-        String cmd = source.pop();
-        destination.push(cmd);
+      Stack<String> source, Stack<String> destination, String messageHeader,
+      String emptySourceMsg) {
+    if (source.size() > 0) {
+      String cmd = source.pop();
+      destination.push(cmd);
 
-        System.out.printf("[%s] %s\n", messageHeader, cmd);
-      }
-      else {
-        System.out.println(emptySourceMsg + " Issue a new command.");
-      }
+      System.out.printf("[%s] %s\n", messageHeader, cmd);
+    } else {
+      System.out.println(emptySourceMsg + " Issue a new command.");
+    }
   }
 
   /**
@@ -151,7 +151,7 @@ public class Commander {
   private void issueCommand() {
     Random rand = new Random();
     int randIndex = rand.nextInt(availableCommands.length);
-    
+
     String command = availableCommands[randIndex];
     undoCommands.push(command);
 
@@ -194,10 +194,12 @@ public class Commander {
         printCommands();
         break;
       case 'u':
-        shuffleCommand(undoCommands, redoCommands, "UNDO COMMAND ISSUED", "ERROR: There is no command to undo.");
+        shuffleCommand(undoCommands, redoCommands, "UNDO COMMAND ISSUED",
+            "ERROR: There is no command to undo.");
         break;
       case 'r':
-        shuffleCommand(redoCommands, undoCommands, "REDO COMMAND ISSUED", "ERROR: There is no command to redo.");
+        shuffleCommand(redoCommands, undoCommands, "REDO COMMAND ISSUED",
+            "ERROR: There is no command to redo.");
         break;
       case 'q':
         System.out.println("Thank you, General.\n");

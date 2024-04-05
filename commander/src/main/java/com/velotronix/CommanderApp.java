@@ -14,8 +14,8 @@ import java.util.Scanner;
 /**
  * The Commander App.
  * Initiate a Commander object, giving the path to a JSON file that contains all
- *  the commands that can be issued. Then, display a user's menu and input
- *  the user's commands.
+ * the commands that can be issued. Then, display a user's menu and input
+ * the user's commands.
  */
 public class CommanderApp {
   public static void main(String[] args) {
@@ -28,4 +28,3 @@ public class CommanderApp {
     scanner.close();
   }
 }
-
