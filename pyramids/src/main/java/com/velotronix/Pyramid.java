@@ -18,6 +18,10 @@ public class Pyramid {
     contributors = pyramidContributors;
   }
 
+  public String getName() {
+    return name;
+  }
+
   public String[] getContributors() {
   return contributors;
   }

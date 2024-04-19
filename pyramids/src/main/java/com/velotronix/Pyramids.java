@@ -168,41 +168,68 @@ public class Pyramids {
     printMenuLine();
   }
 
+  private void displayPyramid(String id) {
+    printMenuLine();
+    
+    Pyramid pyramid = pyramids.get(id);
+    String[] contributors = pyramid.getContributors();
+
+    pyramid.print();
+
+    int totalContributions = 0;
+    for (int i = 0; i < contributors.length; i++) {
+      String glyphId = contributors[i];
+      Pharaoh pharaoh = pharaohsByGlyphs.get(glyphId);
+      int contribution = pharaoh.getContribution();
+
+      totalContributions += contribution;
+
+      System.out.printf("\tContributor %d: %s %d gold coins\n", i + 1, pharaoh.getName(), contribution);
+    }
+    System.out.printf("\tTotal contribution: %d\n", totalContributions);
+
+    printMenuLine();
+  }
+
   private void printAllPyramids() {
-    for (Pyramid pyramid : pyramids.values()) {
-      printMenuLine();
+    for (String id : pyramids.keySet()) {      
+      displayPyramid(id);      
+    }
+  }
 
-      String[] contributors = pyramid.getContributors();
-      pyramid.print();
+  private void displayRequestedPyramids() {
+    System.out.printf("ID\t\tName\n");
+    System.out.printf("---\t\t-------\n");
 
-      int totalContributions = 0;
-      for (int i = 0; i < contributors.length; i++) {
-        String glyphId = contributors[i];
-        Pharaoh pharaoh = pharaohsByGlyphs.get(glyphId);
-        int contribution = pharaoh.getContribution();
-
-        totalContributions += contribution;
-
-        System.out.printf("\tContributor %d: %s %d gold coins\n", i + 1, pharaoh.getName(), contribution);
-      }
-      System.out.printf("\tTotal contribution: %d\n", totalContributions);
-      printMenuLine();
+    for(String id : requestedPyramids) {
+      System.out.printf("%s\t\t%s\n", id, pyramids.get(id).getName());
+      //System.out.println(id + "\t\t" + pyramids.get(id).getName());
+      //System.out.println("%s\t\t%s", id, pyramids.get(id).getName());
     }
   }
 
   private Boolean executeCommand(Scanner scanner, Character command) {
     Boolean isSuccessful = true;
-
-    switch (command) {
+    String id = new String();
+    
+    switch (command){
       case '1':
         printAllPharaohs();
         break;
       case '2':
-        String id = getIdCommand(scanner, "Enter the Pharaoh ID: ");
+        id = getIdCommand(scanner, "Enter a Pharaoh ID: ");
         displayPharaoh(id);
         break;
       case '3':
         printAllPyramids();
+        break;
+      case '4':
+        id = getIdCommand(scanner, "Enter a Pyramid ID: ");
+        displayPyramid(id);
+        requestedPyramids.add(id.toString());
+        break;
+      case '5':
+        displayRequestedPyramids();
         break;
       case 'q':
         System.out.println("Thank you for using Nassef's Egyptian Pyramid App!");
