@@ -7,6 +7,8 @@ public class Pyramids {
   // I've used two arrays here for O(1) reading of the pharaohs and pyramids.
   // other structures or additional structures can be used
   private HashMap<String, Pharaoh> pharaohs = new HashMap<String, Pharaoh>();
+  private HashMap<String, Pharaoh> pharaohsByGlyphs = new HashMap<String, Pharaoh>();
+
   private HashMap<String, Pyramid> pyramids = new HashMap<String, Pyramid>();
 
   private HashSet<String> requestedPyramids = new HashSet<String>();
@@ -63,6 +65,15 @@ public class Pyramids {
     return command;
   }
 
+  private String getIdCommand(Scanner scanner, String prompt) {
+    String id = new String();
+    while (id.isEmpty()) {
+      System.out.println(prompt);
+      id = scanner.nextLine();
+    }
+    return id;
+  }
+
   // initialize the pharaoh array
   private void initializePharaoh(JSONArray pharaohJSONArray) {
     // Initalize the JSON array
@@ -79,6 +90,7 @@ public class Pyramids {
 
       Pharaoh p = new Pharaoh(id, name, begin, end, contribution, hieroglyphic);
       pharaohs.put(Integer.toString(i), p);
+      pharaohsByGlyphs.put(hieroglyphic, p);
     }
   }
 
@@ -119,7 +131,6 @@ public class Pyramids {
         "--------------------------------------------------------------------------------------");
   }
 
-  
   /**
    * Print the calculator's command menu.
    */
@@ -144,13 +155,38 @@ public class Pyramids {
    * Print all pharaohs
    */
   private void printAllPharaohs() {
-    for (Pharaoh value : pharaohs.values()) {
+    for (Pharaoh pharaoh : pharaohs.values()) {
       printMenuLine();
-      value.print();      
+      pharaoh.print();
+      printMenuLine();
     }
   }
 
-  private Boolean executeCommand(Scanner scan, Character command) {
+  private void displayPharaoh(String id) {
+    printMenuLine();
+    pharaohs.get(id).print();
+    printMenuLine();
+  }
+
+  private void printAllPyramids() {
+    for (Pyramid pyramid : pyramids.values()) {
+      printMenuLine();
+
+      String[] contributors = pyramid.getContributors();
+      pyramid.print();
+
+      for (int i = 0; i < contributors.length; i++) {
+        String glyphId = contributors[i];
+        Pharaoh pharaoh = pharaohsByGlyphs.get(glyphId);
+
+        System.out.printf("\tContributor %d: %s %d gold coins\n", i, pharaoh.getName(), pharaoh.getContribution());
+      }
+
+      printMenuLine();
+    }
+  }
+
+  private Boolean executeCommand(Scanner scanner, Character command) {
     Boolean isSuccessful = true;
 
     switch (command) {
@@ -158,6 +194,11 @@ public class Pyramids {
         printAllPharaohs();
         break;
       case '2':
+        String id = getIdCommand(scanner, "Enter the Pharaoh ID: ");
+        displayPharaoh(id);
+        break;
+      case '3':
+        printAllPyramids();
         break;
       case 'q':
         System.out.println("Thank you for using Nassef's Egyptian Pyramid App!");

@@ -28,13 +28,21 @@ public class Pharaoh {
     hieroglyphic = pharaohHieroglyphic;
   }
 
+  public String getName() {
+    return name;
+  }
+
+  public int getContribution() {
+    return contribution.intValue();
+  }
+
   // print pharaoh
   public void print() {
     System.out.printf("Pharaoh %s\n", name);
-    System.out.printf("\tid: %d\n", id);
-    System.out.printf("\tbegin: %d B.C.\n", begin);
-    System.out.printf("\tend: %d B.C.\n", end);
-    System.out.printf("\tcontribution: %d gold coins\n", contribution);
-    System.out.printf("\thieroglyphic: %s\n", hieroglyphic);
+    System.out.printf("\tID: %d\n", id);
+    System.out.printf("\tBegin: %d B.C.\n", begin);
+    System.out.printf("\tEnd: %d B.C.\n", end);
+    System.out.printf("\tContribution: %d gold coins\n", contribution);
+    System.out.printf("\tHieroglyphic: %s\n", hieroglyphic);
   }
 }
