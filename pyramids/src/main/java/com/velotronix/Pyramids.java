@@ -1,40 +1,56 @@
+/**
+ * Implementation of the Pyramids App Engine.
+ * 
+ * 
+ * Author: Hai Bui
+ * 
+ *  
+ * Credits: 
+ * - Gabriel Solomon <Gabriel.Solomon@sjcc.edu>, for the utility code.
+ * 
+ * Created: April 18, 2024
+ */
+
 package com.velotronix;
 
 import java.util.*;
 import org.json.simple.*;
 
 public class Pyramids {
-  // I've used two arrays here for O(1) reading of the pharaohs and pyramids.
-  // other structures or additional structures can be used
+  // The first HashMap is for locating a pharaoh by String ID; the second is by
+  // hieroglyphic (referred to as 'glyphs' from this point forward)
   private HashMap<String, Pharaoh> pharaohs = new HashMap<String, Pharaoh>();
   private HashMap<String, Pharaoh> pharaohsByGlyphs = new HashMap<String, Pharaoh>();
 
+  // Locating a pyramid by a String ID
   private HashMap<String, Pyramid> pyramids = new HashMap<String, Pyramid>();
 
+  // Recording all the unique requested pyramid IDs
   private HashSet<String> requestedPyramids = new HashSet<String>();
+
+  // The menu command input by the user
   private Character command;
 
-  // constructor to initialize the app and read commands
+  // Constructor to initialize the app and read commands
   public Pyramids(String pharaohFilePath, String pyramidFilePath) {
     command = ' ';
 
-    // read egyptian pharaohs
+    // Read the pharaoh data from the JSON file
     JSONArray pharaohJSONArray = JSONFile.readArray(pharaohFilePath);
 
-    // create and intialize the pharaoh array
+    // Parse the pharaoh JSON data into the HashMaps
     initializePharaoh(pharaohJSONArray);
 
-    // read pyramids
+    // Read the pyramid data from the JSON file
     JSONArray pyramidJSONArray = JSONFile.readArray(pyramidFilePath);
 
-    // create and initialize the pyramid array
+    // Parse the pyramid JSON data into the HashMaps
     initializePyramid(pyramidJSONArray);
   }
 
   /**
    * Run the Pyramids operations. Display the menu, take the user's command
-   * inputs, and
-   * performs the operations.
+   * inputs, and performs the operations.
    * 
    * @param scanner Where to read the user's input.
    */
@@ -65,6 +81,13 @@ public class Pyramids {
     return command;
   }
 
+  /**
+   * Get the user's input for a pharaoh's ID, or for the ID of a pyramid
+   * 
+   * @param scanner The input reader object.
+   * @param prompt The instruction to display to the user.
+   * @return The ID as input by the user.
+   */
   private String getIdCommand(Scanner scanner, String prompt) {
     String id = new String();
     while (id.isEmpty()) {
@@ -74,7 +97,10 @@ public class Pyramids {
     return id;
   }
 
-  // initialize the pharaoh array
+  /**
+   * Read the pharaoh JSON data and parse it into Pharaoh objects. Then, add them into the HashMaps.
+   * @param pharaohJSONArray The pharaoh JSON data.
+   */
   private void initializePharaoh(JSONArray pharaohJSONArray) {
     // Initalize the JSON array
     for (int i = 0; i < pharaohJSONArray.size(); i++) {
@@ -94,7 +120,12 @@ public class Pyramids {
     }
   }
 
-  // initialize the pyramid array
+  /**
+   * Read the pyramid JSON data and parse it into Pyramid objects. Then, add them
+   * into the HashMap.
+   * 
+   * @param pharaohJSONArray The pyramid JSON data.
+   */
   private void initializePyramid(JSONArray pyramidJSONArray) {
     // Initalize the JSON array
     for (int i = 0; i < pyramidJSONArray.size(); i++) {
@@ -116,7 +147,13 @@ public class Pyramids {
     }
   }
 
-  // get a integer from a json object, and parse it
+  /**
+   * Get a integer from a json object, and parse it
+   * 
+   * @param o
+   * @param key
+   * @return
+   */
   private Integer toInteger(JSONObject o, String key) {
     String s = o.get(key).toString();
     Integer result = Integer.parseInt(s);
@@ -132,7 +169,7 @@ public class Pyramids {
   }
 
   /**
-   * Print the calculator's command menu.
+   * Print the command menu
    */
   private void printMenu() {
     printMenuLine();
@@ -162,12 +199,21 @@ public class Pyramids {
     }
   }
 
+  /**
+   * Locate and display data about a specific pharaoh.
+   * @param id The pharaoh's ID.
+   */
   private void displayPharaoh(String id) {
     printMenuLine();
     pharaohs.get(id).print();
     printMenuLine();
   }
 
+  /**
+   * Locate and display data about a specific pyramid.
+   * 
+   * @param id The ID of a pyramid.
+   */
   private void displayPyramid(String id) {
     printMenuLine();
     
@@ -191,23 +237,33 @@ public class Pyramids {
     printMenuLine();
   }
 
+  /**
+   * Display all the pyramids.
+   */
   private void printAllPyramids() {
     for (String id : pyramids.keySet()) {      
       displayPyramid(id);      
     }
   }
 
+  /**
+   * Display the unique IDs and names of all pyramids previously requested.
+   */
   private void displayRequestedPyramids() {
     System.out.printf("ID\t\tName\n");
     System.out.printf("---\t\t-------\n");
 
     for(String id : requestedPyramids) {
-      System.out.printf("%s\t\t%s\n", id, pyramids.get(id).getName());
-      //System.out.println(id + "\t\t" + pyramids.get(id).getName());
-      //System.out.println("%s\t\t%s", id, pyramids.get(id).getName());
+      System.out.printf("%s\t\t%s\n", id, pyramids.get(id).getName());     
     }
   }
 
+  /**
+   * Execute a menu command as input by the user.
+   * @param scanner The scanner object to receive the user's input.
+   * @param command The user's input command
+   * @return True if the command execution was successful; False otherwise.
+   */
   private Boolean executeCommand(Scanner scanner, Character command) {
     Boolean isSuccessful = true;
     String id = new String();
@@ -245,5 +301,4 @@ public class Pyramids {
   private static void printMenuCommand(Character command, String desc) {
     System.out.printf("%s\t\t%s\n", command, desc);
   }
-
 }
