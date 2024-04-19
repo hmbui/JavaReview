@@ -175,13 +175,17 @@ public class Pyramids {
       String[] contributors = pyramid.getContributors();
       pyramid.print();
 
+      int totalContributions = 0;
       for (int i = 0; i < contributors.length; i++) {
         String glyphId = contributors[i];
         Pharaoh pharaoh = pharaohsByGlyphs.get(glyphId);
+        int contribution = pharaoh.getContribution();
 
-        System.out.printf("\tContributor %d: %s %d gold coins\n", i, pharaoh.getName(), pharaoh.getContribution());
+        totalContributions += contribution;
+
+        System.out.printf("\tContributor %d: %s %d gold coins\n", i + 1, pharaoh.getName(), contribution);
       }
-
+      System.out.printf("\tTotal contribution: %d\n", totalContributions);
       printMenuLine();
     }
   }
