@@ -6,8 +6,10 @@ import org.json.simple.*;
 public class Pyramids {
   // I've used two arrays here for O(1) reading of the pharaohs and pyramids.
   // other structures or additional structures can be used
-  protected Pharaoh[] pharaohArray;
-  protected Pyramid[] pyramidArray;
+  private HashMap<String, Pharaoh> pharaohs = new HashMap<String, Pharaoh>();
+  private HashMap<String, Pyramid> pyramids = new HashMap<String, Pyramid>();
+
+  private HashSet<String> requestedPyramids = new HashSet<String>();
   private Character command;
 
   // constructor to initialize the app and read commands
@@ -63,15 +65,11 @@ public class Pyramids {
 
   // initialize the pharaoh array
   private void initializePharaoh(JSONArray pharaohJSONArray) {
-    // create array and hash map
-    pharaohArray = new Pharaoh[pharaohJSONArray.size()];
-
-    // initalize the array
+    // Initalize the JSON array
     for (int i = 0; i < pharaohJSONArray.size(); i++) {
-      // get the object
       JSONObject o = (JSONObject) pharaohJSONArray.get(i);
 
-      // parse the json object
+      // Parse the json object
       Integer id = toInteger(o, "id");
       String name = o.get("name").toString();
       Integer begin = toInteger(o, "begin");
@@ -79,23 +77,19 @@ public class Pyramids {
       Integer contribution = toInteger(o, "contribution");
       String hieroglyphic = o.get("hieroglyphic").toString();
 
-      // add a new pharoah to array
       Pharaoh p = new Pharaoh(id, name, begin, end, contribution, hieroglyphic);
-      pharaohArray[i] = p;
+      pharaohs.put(Integer.toString(i), p);
     }
   }
 
   // initialize the pyramid array
   private void initializePyramid(JSONArray pyramidJSONArray) {
-    // create array and hash map
-    pyramidArray = new Pyramid[pyramidJSONArray.size()];
-
-    // initalize the array
+    // Initalize the JSON array
     for (int i = 0; i < pyramidJSONArray.size(); i++) {
       // get the object
       JSONObject o = (JSONObject) pyramidJSONArray.get(i);
 
-      // parse the json object
+      // Parse the json object
       Integer id = toInteger(o, "id");
       String name = o.get("name").toString();
       JSONArray contributorsJSONArray = (JSONArray) o.get("contributors");
@@ -105,9 +99,8 @@ public class Pyramids {
         contributors[j] = c;
       }
 
-      // add a new pyramid to array
       Pyramid p = new Pyramid(id, name, contributors);
-      pyramidArray[i] = p;
+      pyramids.put(Integer.toString(i), p);
     }
   }
 
@@ -123,19 +116,10 @@ public class Pyramids {
    */
   private void printMenuLine() {
     System.out.println(
-        "--------------------------------------------------------------------------");
+        "--------------------------------------------------------------------------------------");
   }
 
-  /**
-   * Print a menu command item.
-   * 
-   * @param command     one-character command.
-   * @param description The description of the command.
-   */
-  private void printMenuItem(Character command, String description) {
-    System.out.printf("%s\t%s\n", command, description);
-  }
-
+  
   /**
    * Print the calculator's command menu.
    */
@@ -156,31 +140,34 @@ public class Pyramids {
     printMenuLine();
   }
 
-  // print all pharaohs
-  private void printAllPharaoh() {
-    for (int i = 0; i < pharaohArray.length; i++) {
+  /**
+   * Print all pharaohs
+   */
+  private void printAllPharaohs() {
+    for (Pharaoh value : pharaohs.values()) {
       printMenuLine();
-      pharaohArray[i].print();
-      printMenuLine();
+      value.print();      
     }
   }
 
   private Boolean executeCommand(Scanner scan, Character command) {
-    Boolean success = true;
+    Boolean isSuccessful = true;
 
     switch (command) {
       case '1':
-        printAllPharaoh();
+        printAllPharaohs();
+        break;
+      case '2':
         break;
       case 'q':
         System.out.println("Thank you for using Nassef's Egyptian Pyramid App!");
         break;
       default:
         System.out.println("ERROR: Unknown commmand");
-        success = false;
+        isSuccessful = false;
     }
 
-    return success;
+    return isSuccessful;
   }
 
   private static void printMenuCommand(Character command, String desc) {
