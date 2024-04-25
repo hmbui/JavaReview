@@ -85,7 +85,7 @@ public class Pyramids {
    * Get the user's input for a pharaoh's ID, or for the ID of a pyramid
    * 
    * @param scanner The input reader object.
-   * @param prompt The instruction to display to the user.
+   * @param prompt  The instruction to display to the user.
    * @return The ID as input by the user.
    */
   private String getIdCommand(Scanner scanner, String prompt) {
@@ -98,7 +98,9 @@ public class Pyramids {
   }
 
   /**
-   * Read the pharaoh JSON data and parse it into Pharaoh objects. Then, add them into the HashMaps.
+   * Read the pharaoh JSON data and parse it into Pharaoh objects. Then, add them
+   * into the HashMaps.
+   * 
    * @param pharaohJSONArray The pharaoh JSON data.
    */
   private void initializePharaoh(JSONArray pharaohJSONArray) {
@@ -201,6 +203,7 @@ public class Pyramids {
 
   /**
    * Locate and display data about a specific pharaoh.
+   * 
    * @param id The pharaoh's ID.
    */
   private void displayPharaoh(String id) {
@@ -216,7 +219,7 @@ public class Pyramids {
    */
   private void displayPyramid(String id) {
     printMenuLine();
-    
+
     Pyramid pyramid = pyramids.get(id);
     String[] contributors = pyramid.getContributors();
 
@@ -241,8 +244,8 @@ public class Pyramids {
    * Display all the pyramids.
    */
   private void printAllPyramids() {
-    for (String id : pyramids.keySet()) {      
-      displayPyramid(id);      
+    for (String id : pyramids.keySet()) {
+      displayPyramid(id);
     }
   }
 
@@ -253,13 +256,14 @@ public class Pyramids {
     System.out.printf("ID\t\tName\n");
     System.out.printf("---\t\t-------\n");
 
-    for(String id : requestedPyramids) {
-      System.out.printf("%s\t\t%s\n", id, pyramids.get(id).getName());     
+    for (String id : requestedPyramids) {
+      System.out.printf("%s\t\t%s\n", id, pyramids.get(id).getName());
     }
   }
 
   /**
    * Execute a menu command as input by the user.
+   * 
    * @param scanner The scanner object to receive the user's input.
    * @param command The user's input command
    * @return True if the command execution was successful; False otherwise.
@@ -267,8 +271,8 @@ public class Pyramids {
   private Boolean executeCommand(Scanner scanner, Character command) {
     Boolean isSuccessful = true;
     String id = new String();
-    
-    switch (command){
+
+    switch (command) {
       case '1':
         printAllPharaohs();
         break;

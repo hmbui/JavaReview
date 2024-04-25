@@ -1,3 +1,10 @@
+/**
+ * Implementation of the Pyramids App.
+ * 
+ * 
+ * Author: Hai Bui
+ * Created: April 18, 2024
+ */
 package com.velotronix;
 
 import java.util.Scanner;
